@@ -1,0 +1,9 @@
+@media only screen and (max-width: 1200px) {
+    .session {
+        font-size: 12px !important;
+    }
+
+}
+button.PlayButton_module_playButton__fc6bec57:hover {
+    background-color: #aa1eca!important;
+}

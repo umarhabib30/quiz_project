@@ -197,30 +197,11 @@ public function list()
     $currentTime = Carbon::now($timezone);
 
     // Fetch quizzes for the student’s class with a start date of today
-    $quizzes = Quiz::where('class_id', $student->class_id)
-    ->where('start_date', $currentDate)
-    ->get();
+    $data['quizzes'] = Quiz::where('class_id', $student->class_id)
+        ->where('start_date', $currentDate)
+        ->get();
 
-    // Add the quiz availability logic based on start time
-    foreach ($quizzes as $quiz) {
-        // Parse the start time from string to Carbon instance
-        try {
-            // Create a Carbon instance from the quiz start_time assuming it's in H:i format
-            $quizStartTime = Carbon::createFromFormat('H:i', trim($quiz->start_time), $timezone);
-
-            // Add one hour to the start time to get the end time
-            $quizEndTime = $quizStartTime->copy()->addHour();
-
-            // Check if the current time is between the quiz start and end time
-            $quiz->quiz_check = $currentTime->between($quizStartTime, $quizEndTime);
-        } catch (\Exception $e) {
-            $quiz->quiz_check = false; // Disable button if parsing fails
-        }
-    }
-
-    // Pass quizzes to the view
-    return view('student.quiz', ['quizzes' => $quizzes]);
+    return view('student.quiz', $data);
 }
-
 
 }

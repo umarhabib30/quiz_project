@@ -189,21 +189,38 @@ public function list()
         return redirect()->back()->with('error', 'No associated class found for this student.');
     }
 
-    // Define the timezone (replace 'America/New_York' with your desired timezone)
-    $timezone = 'Asia/Karachi'; // Example: Pakistan Standard Time
+    // Define the timezone
+    $timezone = 'Asia/Karachi'; 
 
     // Get the current date and time in the local timezone
-    $currentDate = Carbon::now($timezone)->toDateString(); // Current date in local timezone
-    $currentTime = Carbon::now($timezone); // Current time in local timezone
-    $oneHourAgo = $currentTime->copy()->subHour()->toTimeString(); // Time an hour ago in local timezone
+    $currentDate = Carbon::now($timezone)->toDateString();
+    $currentTime = Carbon::now($timezone);
 
-    // Fetch quizzes where class_id matches, start_date is today, and time is within the last hour
-    $data['quizzes'] = Quiz::where('class_id', $student->class_id)
-        ->where('start_date', $currentDate)
-        ->whereBetween('start_time', [$oneHourAgo, $currentTime->toTimeString()])
-        ->get();
+    // Fetch quizzes for the student’s class with a start date of today
+    $quizzes = Quiz::where('class_id', $student->class_id)
+    ->where('start_date', $currentDate)
+    ->get();
+
+    // Add the quiz availability logic based on start time
+    foreach ($quizzes as $quiz) {
+        // Parse the start time from string to Carbon instance
+        try {
+            // Create a Carbon instance from the quiz start_time assuming it's in H:i format
+            $quizStartTime = Carbon::createFromFormat('H:i', trim($quiz->start_time), $timezone);
+
+            // Add one hour to the start time to get the end time
+            $quizEndTime = $quizStartTime->copy()->addHour();
+
+            // Check if the current time is between the quiz start and end time
+            $quiz->quiz_check = $currentTime->between($quizStartTime, $quizEndTime);
+        } catch (\Exception $e) {
+            $quiz->quiz_check = false; // Disable button if parsing fails
+        }
+    }
 
     // Pass quizzes to the view
-    return view('student.quiz', $data);
+    return view('student.quiz', ['quizzes' => $quizzes]);
 }
+
+
 }

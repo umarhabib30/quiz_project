@@ -119,10 +119,10 @@ class QuizController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {
-        if ($request->isMethod('post')) {
-            $data = $request->all();
-            $this->cleanData($data);
+{
+    if ($request->isMethod('post')) {
+        $data = $request->all();
+        $this->cleanData($data);
 
         // Check if the class already has 5 records
         $classId = $data['class_id']; // Assuming `class_id` is a field in the request
@@ -134,7 +134,8 @@ class QuizController extends Controller
                 'msg' => 'You can only add a maximum of 5 records for this class.',
                 'action' => 'reload'
             ];
-            echo json_encode($response); return redirect(url('teacher/quiz'));
+            echo json_encode($response); 
+            return redirect(url('teacher/quiz'));
         }
 
         // Handle file upload if exists
@@ -144,19 +145,40 @@ class QuizController extends Controller
             $data['image'] = basename($filename);
         }
 
+        // Convert start_date and start_time to the local timezone
+        if (!empty($data['start_date']) && !empty($data['start_time'])) {
+            try {
+                // Combine and convert to Asia/Karachi timezone
+                $startDateTime = \Carbon\Carbon::createFromFormat(
+                    'Y-m-d H:i',
+                    $data['start_date'] . ' ' . $data['start_time'],
+                    'Asia/Karachi'
+                );
+
+                // Store only date and time components separately
+                $data['start_date'] = $startDateTime->format('Y-m-d');
+                $data['start_time'] = $startDateTime->format('H:i');
+            } catch (\Exception $e) {
+                // Handle invalid date/time format
+                return redirect()->back()->withErrors(['error' => 'Invalid date or time format.']);
+            }
+        }
+
         // Save the record
-        $user = new Quiz;
-        $user->fill($data); // Use mass assignment for fillable fields
-        $user->save();      // Save the user instance
+        $quiz = new Quiz();
+        $quiz->fill($data); // Use mass assignment for fillable fields
+        $quiz->save();      // Save the quiz instance
 
         $response = [
             'flag' => true,
             'msg' => $this->singular . ' is added successfully.',
             'action' => 'reload'
         ];
-        echo json_encode($response); return redirect(url('teacher/quiz'));
+        echo json_encode($response); 
+        return redirect(url('teacher/quiz'));
     }
 
+    // Render the creation view
     $data = [
         "page_title" => "Add " . $this->singular,
         "page_heading" => "Add " . $this->singular,
@@ -177,6 +199,7 @@ class QuizController extends Controller
     return view($this->view . 'create', $data);
 }
 
+
 public function edit(Request $request,$id = NULL)
 {
     $data   = array();
@@ -184,6 +207,23 @@ public function edit(Request $request,$id = NULL)
         $data = $request->all();
         $this->cleanData($data);
         $CourseCategories   = Quiz::find($id);
+         if (!empty($data['start_date']) && !empty($data['start_time'])) {
+            try {
+                // Combine and convert to Asia/Karachi timezone
+                $startDateTime = \Carbon\Carbon::createFromFormat(
+                    'Y-m-d H:i',
+                    $data['start_date'] . ' ' . $data['start_time'],
+                    'Asia/Karachi'
+                );
+
+                // Store only date and time components separately
+                $data['start_date'] = $startDateTime->format('Y-m-d');
+                $data['start_time'] = $startDateTime->format('H:i');
+            } catch (\Exception $e) {
+                // Handle invalid date/time format
+                return redirect()->back()->withErrors(['error' => 'Invalid date or time format.']);
+            }
+        }
             // $data['updated_by'] = \Auth::id();
         $CourseCategories->update($data);
         $response = array('flag'=>true,'msg'=>$this->singular.' is updated sucessfully.','action'=>'reload');

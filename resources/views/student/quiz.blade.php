@@ -31,6 +31,8 @@
 								<tr>
 									<th>#</th>
 									<th>Title</th>
+									<th>Date (YYYY-MM-DD)</th>
+									<th>Time (HH:MM)</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -40,16 +42,26 @@
 								<tr class="list_{{ $quiz->id }}">
 									<th scope="row">{{ $key + 1 }}</th>
 									<td class="pl-0" data-id="{{ $quiz->id }}">{{ $quiz->title }}</td>
+									<td class="pl-0">
+										{{ \Carbon\Carbon::parse($quiz->start_date)->format('Y-m-d') }}
+									</td>
+									<td class="pl-0">
+										{{ \Carbon\Carbon::parse($quiz->start_time)->format('H:i') }}
+									</td>
 									<td>
-										<a class="btn btn-success" href="{{ url('student/start-quiz/'. $quiz->id) }}">Start Quiz</a>
+
+										<a class="btn btn-success" href="{{ url('student/start-quiz/' . $quiz->id) }}">Start Quiz</a>
+										
 									</td>
 								</tr>
 								@endforeach
 								@else
 								<tr>
-									<td colspan="3">No quizzes available for your class.</td>
+									<td colspan="5">No quizzes available for your class today.</td>
 								</tr>
 								@endif
+
+
 							</tbody>
 
 						</table>
@@ -61,38 +73,38 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="disclaimerModalLabel">Disclaimer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Please read and accept the disclaimer before proceeding to use this dashboard.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">I Accept</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="disclaimerModalLabel">Disclaimer</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>Please read and accept the disclaimer before proceeding to use this dashboard.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">I Accept</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Include Bootstrap JS -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+	document.addEventListener("DOMContentLoaded", function () {
         // Automatically show the modal when the page loads
-        const disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
-        disclaimerModal.show();
+		const disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
+		disclaimerModal.show();
 
         // Add click event listener to the "I Accept" button
-        document.getElementById('acceptButton').addEventListener('click', function () {
+		document.getElementById('acceptButton').addEventListener('click', function () {
             // Hide the modal
-            disclaimerModal.hide();
+			disclaimerModal.hide();
 
             // Redirect to the desired URL
-            window.location.href = "{{ url('student/quiz') }}";
-        });
-    });
+			window.location.href = "{{ url('student/quiz') }}";
+		});
+	});
 </script>
 
 @endsection

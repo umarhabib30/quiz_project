@@ -30,7 +30,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="mb-3">
                                             <label for="detail" class="form-label">Password</label>
-                                            <input type='password' name="password" id="password" class="form-control" required="" value="{{@$row['password']}}" />
+                                            <input type='password' name="password" id="password" class="form-control" value="{{@$row['password']}}" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6">

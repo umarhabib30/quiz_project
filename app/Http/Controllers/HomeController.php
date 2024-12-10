@@ -24,13 +24,13 @@ class HomeController extends Controller
          $data['teachers'] = User::where('role', '2')->get()->count();
          $data['students'] = User::where('role', '3')->get()->count();
          $data['classes'] = Classes::get()->count();
-         return view('admin.dashboard', $data);
+         return view('home', $data);
      }
      if(Auth::user()->role == '2'){
-        return view('admin.dashboard', $data);
+        return view('home', $data);
     }
     if(Auth::user()->role == '3'){
-        return view('student.dashboard', $data);
+        return view('home', $data);
     }
 }
 }

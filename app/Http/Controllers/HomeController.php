@@ -7,6 +7,7 @@ use Session;
 use Auth, DB;
 use App\Models\Classes;
 use App\Models\User;
+use App\Models\Quiz;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,7 @@ class HomeController extends Controller
          $data['teachers'] = User::where('role', '2')->get()->count();
          $data['students'] = User::where('role', '3')->get()->count();
          $data['classes'] = Classes::get()->count();
+         $data['quiz'] = Quiz::get()->count();
          return view('home', $data);
      }
      if(Auth::user()->role == '2'){

@@ -761,7 +761,7 @@ html [type=button] {
         <div class="navbar-nav flex-row order-md-last">
           <div class="nav-item dropdown">
             <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-              <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+              <span class="avatar avatar-sm" style="background-image: url('{{ asset('storage/images/' . Auth::user()->image) }}')"></span>
               <div class="d-none d-xl-block ps-2">
                 <div>{{ Auth::user()->name}}</div>
               </div>
@@ -873,6 +873,16 @@ html [type=button] {
                   </span>
                   <span class="nav-link-title">
                     Question
+                  </span>
+                </a>
+              </li>
+               <li class="nav-item dropdown @if($active_module == 'Answer') active @endif">
+                <a class="nav-link" href="{{url('answers')}}" >
+                  <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
+                  </span>
+                  <span class="nav-link-title">
+                    Answer
                   </span>
                 </a>
               </li>

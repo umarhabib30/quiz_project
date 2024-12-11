@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-@if(Auth::user()->role != '3')
+@if(Auth::user()->role == '0' || Auth::user()->role == '1')
 <div class="page-body">
   <div class="container-xl">
     <div class="row row-deck row-cards">
@@ -143,13 +143,13 @@
                 <h3 class="card-title mt-4">Email</h3>
                 <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}" readonly="">
               </div>
-              @php 
+              <!-- @php 
               $class = \App\Models\Classes::where('id', Auth::user()->class_id)->first();
               @endphp
               <div class="col-4">
                 <h3 class="card-title mt-4">Class</h3>
                 <input type="text" name="Class" class="form-control" value="{{ $class ? $class->name : 'N/A' }}" readonly>
-              </div>
+              </div> -->
 
             </div>
             <h3 class="card-title mt-4">Password</h3>

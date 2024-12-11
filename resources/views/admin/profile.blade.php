@@ -42,10 +42,6 @@
                 <h3 class="card-title mt-4">Email</h3>
                 <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}" readonly="">
               </div>
-              <div class="col-4">
-                <h3 class="card-title mt-4">Class</h3>
-                <input type="text" name="Class" class="form-control" value="{{ $class ? $class->name : 'N/A' }}" readonly>
-              </div>
 
             </div>
             <h3 class="card-title mt-4">Password</h3>

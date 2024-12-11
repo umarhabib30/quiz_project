@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@if(Auth::user()->role != '3')
+@if(Auth::user()->role == '0' || Auth::user()->role == '1')
 <div class="page-body">
   <div class="container-xl">
     <div class="row row-deck row-cards">

@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use App\Models\Classes;
+use App\Models\Quiz;
 use App\Models\Categories;
 use Auth, Hash, Storage, Excel;
 use App\Exports\ArrayExport;
@@ -27,66 +28,73 @@ class DashboardController extends Controller
     public function index()
     {
         $data['active_module'] = "home";
-        $data['teachers'] = User::where('role', '2')->get()->count();
-        $data['students'] = User::where('role', '3')->get()->count();
-        $data['classes'] = Classes::get()->count();
-        // Log::info('Dashboard accessed by user: ', ['id' => Auth::id()]);
-        // dd($data);
-        return view('admin.dashboard', $data);
+        if(Auth::user()->role == '1'){
+           $data['teachers'] = User::where('role', '2')->get()->count();
+           $data['students'] = User::where('role', '3')->get()->count();
+           $data['classes'] = Classes::get()->count();
+           $data['quiz'] = Quiz::get()->count();
+           return view('home', $data);
+       }
+       if(Auth::user()->role == '2'){
+        return view('home', $data);
     }
-    public function cleanData(&$data) {
-        $unset = ['q','_token'];
-        foreach ($unset as $value) {
-            if(array_key_exists ($value,$data))  {
-                unset($data[$value]);
-            }
+    if(Auth::user()->role == '3'){
+        return view('home', $data);
+    }
+}
+public function cleanData(&$data) {
+    $unset = ['q','_token'];
+    foreach ($unset as $value) {
+        if(array_key_exists ($value,$data))  {
+            unset($data[$value]);
         }
-        $int = ['Price'];
-        foreach ($int as $value) {
-            if(array_key_exists ($value,$data))  {
-                $data[$value] = (int)str_replace(['(','Rs',')',' ','-','_',','], '', $data[$value]);
-            }
+    }
+    $int = ['Price'];
+    foreach ($int as $value) {
+        if(array_key_exists ($value,$data))  {
+            $data[$value] = (int)str_replace(['(','Rs',')',' ','-','_',','], '', $data[$value]);
+        }
 
-        }
     }
-    public function profile(Request $request){
-        if ($request->isMethod('post')) {
-            $data = $request->all();
-            $this->cleanData($data);
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $filename = Storage::putFile($this->directory, $file);
-                $data['image'] = basename($filename);
-            }
+}
+public function profile(Request $request){
+    if ($request->isMethod('post')) {
+        $data = $request->all();
+        $this->cleanData($data);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = Storage::putFile($this->directory, $file);
+            $data['image'] = basename($filename);
+        }
            // Remove unnecessary fields
-            unset($data['confirm_password']);
+        unset($data['confirm_password']);
 
         // Check if password is not empty before hashing
-            if (!empty($data['password'])) {
+        if (!empty($data['password'])) {
             // Check if password and confirm_password match
-                if ($data['password'] == $data['confirm_password']) {
-                    $data['password'] = Hash::make($data['password']);
-                } else {
-                    $response = array('flag' => false, 'msg' => 'Password does not match.', 'action' => 'reload');
-                    echo json_encode($response);
-                    return;
-                }
+            if ($data['password'] == $data['confirm_password']) {
+                $data['password'] = Hash::make($data['password']);
             } else {
-            // Remove the 'password' field from the update if it's empty
-                unset($data['password']);
+                $response = array('flag' => false, 'msg' => 'Password does not match.', 'action' => 'reload');
+                echo json_encode($response);
+                return;
             }
+        } else {
+            // Remove the 'password' field from the update if it's empty
+            unset($data['password']);
+        }
 
         // Remove the 'confirm_password' field before updating
-            unset($data['confirm_password']);
-            User::where("id",auth()->user()->id)->update($data);
-            echo json_encode(array("flag"=>true,"msg"=>"Profile updated successfully!","action"=>"reload"));
-            return redirect()->back();
-        }
-        $data['active_module'] = "home";
-        return view('admin.profile', $data);
+        unset($data['confirm_password']);
+        User::where("id",auth()->user()->id)->update($data);
+        echo json_encode(array("flag"=>true,"msg"=>"Profile updated successfully!","action"=>"reload"));
+        return redirect()->back();
     }
+    $data['active_module'] = "home";
+    return view('admin.profile', $data);
+}
 
-    public function search($records,$request,&$data) {
+public function search($records,$request,&$data) {
         /*
         SET DEFAULT VALUES
         */

@@ -53,7 +53,7 @@ class SettingController extends Controller
 
     public function showProfile()
     {
-     $data['class'] = Classes::where('id', Auth::user()->class_id)->first();
+     // $data['class'] = Classes::where('id', Auth::user()->class_id)->first();
      $data['active_module'] = "home";
      return view('admin.profile', $data);
  }
@@ -93,7 +93,7 @@ class SettingController extends Controller
 
         // Redirect based on user role
         if ($user->role == '0' || $user->role == '1') {
-            return redirect()->to('admin/profile')->with('success', 'Profile updated successfully.');
+            return redirect()->to('user/profile')->with('success', 'Profile updated successfully.');
         } else {
             return redirect()->to('home')->with('success', 'Profile updated successfully.');
         }

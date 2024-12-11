@@ -58,7 +58,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Class</th>
+                                    <!-- <th>Class</th> -->
                                     <th>Role</th>
                                     <th>Created By</th>
                                     <th>Gender</th>
@@ -74,7 +74,7 @@
                                     <th scope="row">{{ ( $currentPage - 1 ) * $perPage + $key + 1 }}</th>
                                     <td class="pl-0" data-id="{{$val[$module['db_key']]}}">{{$val['name']}}</td>
                                     <td class="pl-0" data-id="{{$val[$module['db_key']]}}">{{$val['email']}}</td>
-                                    <td class="pl-0" data-id="{{$val[$module['db_key']]}}">{{$val['class']['name'] ?? 'N/A'}}</td>
+                                    <!-- <td class="pl-0" data-id="{{$val[$module['db_key']]}}">{{$val['class']['name'] ?? 'N/A'}}</td> -->
                                     <td class="pl-0" data-id="{{$val[$module['db_key']]}}">@if($val['role'] == '3') Student @endif</td>
                                     <td class="pl-0" data-id="{{$val[$module['db_key']]}}">{{$val['creator']['name'] ?? 'N/A'}}</td>
                                     <td class="pl-0" data-id="{{$val[$module['db_key']]}}">{{$val['gender']}}</td>

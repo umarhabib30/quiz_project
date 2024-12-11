@@ -44,7 +44,7 @@
                                         <input type='file' name="image" id="image" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6">
+                                <!-- <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label for="detail" class="form-label">Class</label>
                                         <select name="class_id" id="class_id" class="form-control" required="">
@@ -53,7 +53,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

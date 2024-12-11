@@ -30,9 +30,10 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="mb-3">
                                             <label for="detail" class="form-label">Password</label>
-                                            <input type='password' name="password" id="password" class="form-control" value="{{@$row['password']}}" />
+                                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter a new password or leave blank to retain existing" />
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6 col-md-6">
                                         <div class="mb-3">
                                             <label for="detail" class="form-label">Gender</label>
@@ -49,7 +50,7 @@
                                             <input type='file' name="image" id="image" class="form-control" value="{{@$row['image']}}" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
+                                   <!--  <div class="col-lg-6 col-md-6">
                                         <div class="mb-3">
                                             <label for="detail" class="form-label">Class</label>
                                             <select type='text' name="class_id" id="class_id" class="form-control" required="">
@@ -58,7 +59,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

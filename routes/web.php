@@ -14,33 +14,36 @@ use App\Http\Controllers\Student\StudentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/', function () {
-Auth::routes();
-// Route::view('/', 'auth.login');
-Route::get('/', function () {
-        return view('auth.login');
-});
-Route::get('/login', function () {
-        return view('auth.login');
-});
+        // Route::get('/', function () {
+        Auth::routes();
+        // Route::view('/', 'auth.login');
+        Route::get('/', function () {
+                return view('auth.login');
+        });
+        Route::get('/login', function () {
+                return view('auth.login');
+        });
 // Route::view('/login', 'auth.login')->name('login');
+        /*
+            Teacher Answers
+        */
+        Route::get('answers', [App\Http\Controllers\Teacher\AnswerController::class, 'index']);
 
-//students
-Route::get('student/dashboard', [App\Http\Controllers\Student\StudentQuizController::class, 'dashboard']);
-Route::get('/student/quiz',[App\Http\Controllers\Student\StudentQuizController::class, 'list']);
-Route::get('/student/start-quiz/{id?}',[App\Http\Controllers\Student\StudentQuizController::class, 'start_quiz']);
-Route::post('/student/submit-answer/{quiz_id?}/{id?}',[App\Http\Controllers\Student\StudentQuizController::class, 'submitQuiz']);
-//end student
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
-Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('ad_dashboard');
-Route::get('/admin/users', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users');
-Route::get('/user/settings', [App\Http\Controllers\SettingController::class, 'showSettings'])->name('admin.settings');
-Route::post('/user/settings',  [App\Http\Controllers\SettingController::class, 'updateSettings'])->name('admin.settings.update');
-Route::get('/user/profile', [App\Http\Controllers\SettingController::class, 'showProfile'])->name('user.profile');
-Route::post('/user/profile',  [App\Http\Controllers\SettingController::class, 'updateProfile'])->name('user.profile.update');
+        //students
+        Route::get('student/dashboard', [App\Http\Controllers\Student\StudentQuizController::class, 'dashboard']);
+        Route::get('/student/quiz',[App\Http\Controllers\Student\StudentQuizController::class, 'list']);
+        Route::get('/student/start-quiz/{id?}',[App\Http\Controllers\Student\StudentQuizController::class, 'start_quiz']);
+        Route::post('/student/submit-answer/{quiz_id?}/{id?}',[App\Http\Controllers\Student\StudentQuizController::class, 'submitQuiz']);
+        //end student
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+        Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('ad_dashboard');
+        Route::get('/admin/users', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users');
+        Route::get('/user/settings', [App\Http\Controllers\SettingController::class, 'showSettings'])->name('admin.settings');
+        Route::post('/user/settings',  [App\Http\Controllers\SettingController::class, 'updateSettings'])->name('admin.settings.update');
+        Route::get('/user/profile', [App\Http\Controllers\SettingController::class, 'showProfile'])->name('user.profile');
+        Route::post('/user/profile',  [App\Http\Controllers\SettingController::class, 'updateProfile'])->name('user.profile.update');
 
-
+        
         /*
         users
         */
@@ -130,5 +133,6 @@ Route::post('/user/profile',  [App\Http\Controllers\SettingController::class, 'u
         Route::post('/teacher/questions/{quizid}/create', [App\Http\Controllers\Teacher\QuestionController::class, 'create']);
 
 
+        
 
 

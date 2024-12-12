@@ -32,8 +32,10 @@
                 <div class="col-md">
                   <div class="form-label">Gender</div>
                   <select class="form-control" name="gender" id="gender">
-                   <option value="Male">Male</option>
-                   <option value="Female">Female</option>
+                    <option>Select Gender</option>
+                   <option value="Male" @if(Auth::user()->gender == 'Male') selected @endif>Male</option>
+                   <option value="Female" @if(Auth::user()->gender == 'Female') selected @endif>Female</option>
+                   <option value="Other" @if(Auth::user()->gender == 'Other') selected @endif>Other</option>
                  </select>
                </div>
              </div>

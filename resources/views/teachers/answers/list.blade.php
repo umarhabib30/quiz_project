@@ -20,46 +20,36 @@
                     @endif -->
                 </div>
                 <div class="card-body">
-
+                    <h3>Class: {{ $class->name }}</h3>
+                    <h4>Quiz: {{ $quiz->title }}</h4>
                     <div class="table-responsive">
-                            <table class="table table-vcenter table-mobile-md card-table" data-url="{{$action}}/edit">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Quiz</th>
-                                        <th>Student</th>
-                                        <th>Question</th>
-                                        <th>Answer</th>
-                                        <th class="w-1">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if(!empty($answers['data']) && sizeof($answers['data'])>0)
-                                    @foreach($answers['data'] as $key => $val)
-                                    <tr class="list_{{$val[$module['db_key']]}}">
-                                        <th scope="row">{{++$key}}</th>
-                                        <td class="pl-0" data-id="{{$val[$module['db_key']]}}" data-input="text" data-field="qustion">{{$val['question']['question']}}</td>
-                                        <td class="pl-0" data-id="{{$val[$module['db_key']]}}" data-input="text" data-field="title">{{$val['quiz']['title']}}</td>
-                                        <td class="pl-0" data-id="{{$val[$module['db_key']]}}" data-input="text" data-field="is_correct">{{$val['student']['name']}})</td>
-                                        <td class="pr-0 text-right">
-                                            <a href="#data_modal" data-toggle="modal" data-url="{{$action}}/edit/{{$val[$module['db_key']]}}" data-action="data_modal" class="btn btn-primary d-none d-sm-inline-block"> <i class="fa-solid fa-pen-to-square"></i> </a>
-                                            
-                                            <a data-action="delete_record" href="javascript:void(0);" class="btn btn-danger d-none d-sm-inline-block mt-2" data-url="{{url($module['action'].'/delete/'.$val[$module['db_key']])}}">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    {!! $answers['pagination'] !!}
-                                    @else
-                                    <tr>
-                                        <td colspan="5" class="text-center">No answer found</td>
-                                    </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table table-vcenter table-mobile-md card-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($students as $key => $student)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $student->name }}</td>
+                                    <td>
+                                        <a href="{{ url('check/answers/' . $quiz->id . '/' . $student->id) }}">Check Answers</a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3">No students assigned for this quiz.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>

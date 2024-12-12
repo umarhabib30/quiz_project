@@ -100,7 +100,7 @@
 </div>
 </div>
 </div>
-@else
+@elseif(Auth::user()->role == '2' || Auth::user()->role == '3')
 <div class="page-body">
   <div class="container-xl">
     <div class="card">
@@ -109,7 +109,7 @@
           <div class="card-body">
             <h2 class="mb-4">My Account</h2>
             <h3 class="card-title">Profile Details</h3>
-            <form action="{{ url('/user/profile')}}" method="post" enctype="multipart/form-data">
+            <form action="{{ url('/user/profile')}}" method="Post" enctype="multipart/form-data">
               @csrf
               <div class="row align-items-center">
                 <div class="col-auto">
@@ -133,8 +133,10 @@
                 <div class="col-md">
                   <div class="form-label">Gender</div>
                   <select class="form-control" name="gender" id="gender">
-                   <option value="Male">Male</option>
-                   <option value="Female">Female</option>
+                    <option>Select Gender</option>
+                   <option value="Male" @if(Auth::user()->gender == 'Male') selected @endif>Male</option>
+                   <option value="Female" @if(Auth::user()->gender == 'Female') selected @endif>Female</option>
+                   <option value="Other" @if(Auth::user()->gender == 'Other') selected @endif>Other</option>
                  </select>
                </div>
              </div>
@@ -143,13 +145,6 @@
                 <h3 class="card-title mt-4">Email</h3>
                 <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}" readonly="">
               </div>
-              <!-- @php 
-              $class = \App\Models\Classes::where('id', Auth::user()->class_id)->first();
-              @endphp
-              <div class="col-4">
-                <h3 class="card-title mt-4">Class</h3>
-                <input type="text" name="Class" class="form-control" value="{{ $class ? $class->name : 'N/A' }}" readonly>
-              </div> -->
 
             </div>
             <h3 class="card-title mt-4">Password</h3>

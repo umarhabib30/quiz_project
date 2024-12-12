@@ -72,7 +72,7 @@
 	</div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -88,9 +88,9 @@
 		</div>
 	</div>
 </div>
-
+ -->
 <!-- Include Bootstrap JS -->
-<script>
+<!-- <script>
 	document.addEventListener("DOMContentLoaded", function () {
         // Automatically show the modal when the page loads
 		const disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
@@ -105,6 +105,6 @@
 			window.location.href = "{{ url('student/quiz') }}";
 		});
 	});
-</script>
+</script> -->
 
 @endsection

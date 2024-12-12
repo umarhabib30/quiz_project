@@ -73,6 +73,7 @@
                                             <div class="dropdown-menu">
                                               <a class="dropdown-item" href="{{ url('teacher/questions/'. $val['id'] . '/create') }}">Add Questions</a>
                                               <a class="dropdown-item" href="{{ url('teacher/questions/'. $val['id'] ) }}">View Questions</a>
+                                              <a class="dropdown-item" href="{{ url('quiz/students/'. $val['id'] ) }}">View Students</a>
                                               <a class="dropdown-item" href="{{url('teacher/quiz/edit', $val['id'])}}">Edit Quiz</a>
                                               <a class="dropdown-item" href="{{url('teacher/quiz/delete', $val['id'])}}">Delete Quiz</a>
                                           </div>

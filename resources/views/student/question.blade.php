@@ -98,7 +98,7 @@
 							<!-- Webcam and Video Preview Modal -->
 							<div id="modal-overlay"></div>
 							<div id="video-modal">
-								<video id="preview-video" controls autoplay muted></video>
+								<video id="preview-video" autoplay muted></video>
 								<div>
 									<button id="re-record-btn" class="btn btn-warning">Re-record Video</button>
 									<button id="confirm-btn" class="btn btn-primary" disabled>Confirm Video</button>

@@ -94,7 +94,8 @@ class SettingController extends Controller
         // Redirect based on user role
         if ($user->role == '0' || $user->role == '1') {
             return redirect()->to('user/profile')->with('success', 'Profile updated successfully.');
-        } else {
+        }
+        if ($user->role == '2' || $user->role == '3') {
             return redirect()->to('home')->with('success', 'Profile updated successfully.');
         }
     } catch (\Exception $e) {

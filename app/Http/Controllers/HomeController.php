@@ -21,7 +21,7 @@ class HomeController extends Controller
     // }
     public function index(){
      $data['active_module'] = "home";
-     if(Auth::user()->role == '1'){
+     if(Auth::user()->role == '1' || Auth::user()->role == '0'){
          $data['teachers'] = User::where('role', '2')->get()->count();
          $data['students'] = User::where('role', '3')->get()->count();
          $data['classes'] = Classes::get()->count();

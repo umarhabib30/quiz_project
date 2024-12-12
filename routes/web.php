@@ -15,18 +15,21 @@ use App\Http\Controllers\Student\StudentController;
 |
 */
         // Route::get('/', function () {
-        Auth::routes();
+Auth::routes();
         // Route::view('/', 'auth.login');
-        Route::get('/', function () {
-                return view('auth.login');
-        });
-        Route::get('/login', function () {
-                return view('auth.login');
-        });
+Route::get('/', function () {
+    return view('auth.login');
+});
+Route::get('/login', function () {
+    return view('auth.login');
+});
 // Route::view('/login', 'auth.login')->name('login');
         /*
-            Teacher Answers
+        Answer
         */
+        Route::get('quiz/students/{id?}', [App\Http\Controllers\Teacher\AnswerController::class, 'showStudents']);
+        Route::get('check/answers/{id?}/{student_id?}', [App\Http\Controllers\Teacher\AnswerController::class, 'showAnswer']);
+
         Route::get('answers', [App\Http\Controllers\Teacher\AnswerController::class, 'index']);
 
         //students
@@ -132,7 +135,8 @@ use App\Http\Controllers\Student\StudentController;
         Route::get('/teacher/questions/{quizid}/create', [App\Http\Controllers\Teacher\QuestionController::class, 'create']);
         Route::post('/teacher/questions/{quizid}/create', [App\Http\Controllers\Teacher\QuestionController::class, 'create']);
 
-
+        
+        
         
 
 

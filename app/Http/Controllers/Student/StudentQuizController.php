@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Quiz;
 use App\Models\Question;
+use App\Models\Enrollment;
 use App\Models\Students\Answer;
 use Illuminate\Http\Request;
 use Auth;
@@ -181,27 +182,30 @@ private function createAnswer($quizId, $questionId, $userId, $videoPath)
 //             // Pass quizzes to the view
 //    return view('student.quiz', $data);
 // }
+    // if (!$student || !$student->class_id) {
+    //     return redirect()->back()->with('error', 'No associated class found for this student.');
+    // }
 public function list()
 {
     $student = Auth::user();
-
-    if (!$student || !$student->class_id) {
-        return redirect()->back()->with('error', 'No associated class found for this student.');
-    }
+    $student_id = $student->id;
 
     // Define the timezone
-    $timezone = 'Asia/Karachi'; 
+    $timezone = 'Asia/Karachi';
 
-    // Get the current date and time in the local timezone
+    // Get the current date in the local timezone
     $currentDate = Carbon::now($timezone)->toDateString();
-    $currentTime = Carbon::now($timezone);
 
-    // Fetch quizzes for the student’s class with a start date of today
-    $data['quizzes'] = Quiz::where('class_id', $student->class_id)
-        ->where('start_date', $currentDate)
-        ->get();
+    // Fetch all class IDs associated with the student
+    $classIds = Enrollment::where('student_id', $student_id)->pluck('class_id');
+
+    // Fetch quizzes for the classes the student is enrolled in, with a start date of today
+    $data['quizzes'] = Quiz::whereIn('class_id', $classIds)
+    ->where('start_date', $currentDate)
+    ->get();
 
     return view('student.quiz', $data);
 }
+
 
 }
